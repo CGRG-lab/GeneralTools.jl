@@ -8,4 +8,7 @@ module GeneralTools
 	include("eventFilter.jl");
 	include("openit.jl");
 	include("back2.jl");
+	export datalist
+	export back2
+	
 end
