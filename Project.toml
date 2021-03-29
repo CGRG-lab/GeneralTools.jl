@@ -1,8 +1,4 @@
 name = "GeneralTools"
-uuid = "c0a1db73-a025-4687-a33a-436f868cd7ed"
+uuid = "e6213164-e472-4082-9e51-db24b57ca6ab"
 authors = ["okatsn <49422823+okatsn@users.noreply.github.com>"]
 version = "0.1.0"
-
-[deps]
-CSV = "336ed68f-0bac-5ca0-87d4-7b16caf5d00b"
-Dates = "ade2ca70-3891-5945-98fb-dc099432e06a"
