@@ -8,7 +8,10 @@ module GeneralTools
 	include("datalist.jl");
 	include("openit.jl");
 	include("back2.jl");
+	
+	using Plots
 	include("figureplot/supertitle.jl");
+	
 	export datalist
 	export back2
 	export supertitle
