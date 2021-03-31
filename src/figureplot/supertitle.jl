@@ -8,6 +8,8 @@ How to use:
 	plot(title,p1,layout=layout);
 """
 	y = ones(3);
+	# line, scatter, heatmap, etc all just pass through to the plot function. You can imagine it looks like:
+	# vline(args...; kw...) = plot(args...; kw..., seriestype = :vline)
 	title = Plots.scatter(y, marker=0,markeralpha=0, 
 		annotations=(2, y[2], Plots.text(titlestr)),
 		axis=false, leg=false,grid = false,size=size)
