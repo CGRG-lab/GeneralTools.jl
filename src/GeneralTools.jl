@@ -1,3 +1,6 @@
+ # usually git ignore manifest if this is a package for using, 
+ # because usually dependencies on a specific version of other package (e.g. Plots) is not necessary, 
+ # and if Manifest.toml is uploaded to github, people may have to install two different versions of Plots, resulting in confliction.
 module GeneralTools
     filesep = Base.Filesystem.path_separator;
     export filesep
@@ -8,8 +11,8 @@ module GeneralTools
 	include("datalist.jl");
 	include("openit.jl");
 	include("back2.jl");
-	
-	using Plots 
+	include("circles.jl");
+	using Plots # you have to add Plots under this environment, i.e. (GeneralTools) pkg> add Plots
 	# supertitle will fail without using Plots here, 
 	# even when `using Plots` has been applied in your script.
 	include("figureplot/supertitle.jl");
