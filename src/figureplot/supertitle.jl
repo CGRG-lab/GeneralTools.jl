@@ -12,6 +12,6 @@ How to use:
 	# vline(args...; kw...) = plot(args...; kw..., seriestype = :vline)
 	title = Plots.scatter(y, marker=0,markeralpha=0, 
 		annotations=(2, y[2], Plots.text(titlestr)),
-		axis=false, leg=false,grid = false,size=size)
+		axis=false, leg=false,grid = false,ticks = nothing,size=size)
 	return title, Plots.grid(2,1,heights = [height,1-height])
 end

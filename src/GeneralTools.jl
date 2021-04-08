@@ -20,5 +20,6 @@ module GeneralTools
 	export datalist
 	export back2
 	export supertitle
+	export openit
 	
 end
