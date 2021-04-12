@@ -1,4 +1,4 @@
-function findfirstfromlast(arr_Bool);
+function findfirstfromlast(arr_Bool)
 	for i in Iterators.reverse(eachindex(arr_Bool))
 		if arr_Bool[i]
 			return i
