@@ -12,7 +12,7 @@ module GeneralTools
 	include("openit.jl");
 	include("back2.jl");
 	include("circles.jl");
-	include("findfirstfromlast");
+	include("findfirstfromlast.jl");
 	using Plots # you have to add Plots under this environment, i.e. (GeneralTools) pkg> add Plots
 	# supertitle will fail without using Plots here, 
 	# even when `using Plots` has been applied in your script.
