@@ -13,6 +13,7 @@ module GeneralTools
 	include("back2.jl");
 	include("circles.jl");
 	include("findfirstfromlast.jl");
+	include("cdfE.jl")
 	using Plots # you have to add Plots under this environment, i.e. (GeneralTools) pkg> add Plots
 	# supertitle will fail without using Plots here, 
 	# even when `using Plots` has been applied in your script.
@@ -23,5 +24,6 @@ module GeneralTools
 	export supertitle
 	export openit
 	export findfirstfromlast
+	export cdfE
 	
 end
