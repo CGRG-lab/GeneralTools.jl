@@ -23,7 +23,9 @@ module GeneralTools
 	# supertitle will fail without using Plots here, 
 	# even when `using Plots` has been applied in your script.
 	include("figureplot/supertitle.jl");
+	include("textprocessing/tex.jl");
 	
+
 	export datalist
 	export back2
 	export supertitle
@@ -31,5 +33,6 @@ module GeneralTools
 	export findfirstfromlast
 	export cdfE
 	export getext
-	
+	export removesection!
+	export removecomment!
 end
