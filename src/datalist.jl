@@ -1,14 +1,15 @@
+"""
+# Example:
+     find_in = "D:\\GoogleDrive\\1Programming\\DATA"
+     regexppattern = r".*\.mat"
+     find = "both"
+     method = "readdir"
+     O = datalist(regexppattern, find_in, method, find);
+# Output:
+     O.fullpath is a string vector of the paths of the desired files or folders.
+"""
 function datalist(regexppattern::Regex, find_in::String,
                   method::String="readdir", find::String="both")
-
-# Example:
-#     find_in = "D:\\GoogleDrive\\1Programming\\DATA"
-#     regexppattern = r".*\.mat"
-#     find = "both"
-#     method = "readdir"
-#     O = datalist(regexppattern, find_in, method, find);
-# Output:
-#     O.fullpath is a string vector of the paths of the desired files or folders.
 # CHECKPOINT:
 # for the setting:
 #     find_in = "D:\\GoogleDrive\\1Programming\\DATA"
