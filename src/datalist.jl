@@ -1,7 +1,7 @@
 """
 # Example:
      find_in = "D:\\GoogleDrive\\1Programming\\DATA"
-     regexppattern = r".*\.mat"
+     regexppattern = r".*\\.mat"
      find = "both"
      method = "readdir"
      O = datalist(regexppattern, find_in, method, find);
