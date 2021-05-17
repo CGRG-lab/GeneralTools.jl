@@ -22,6 +22,7 @@ module GeneralTools
 	using Plots # you have to add Plots under this environment, i.e. (GeneralTools) pkg> add Plots
 	# supertitle will fail without using Plots here, 
 	# even when `using Plots` has been applied in your script.
+	using LaTeXStrings
 	include("figureplot/supertitle.jl");
 	include("figureplot/superlegend.jl");
 	include("textprocessing/tex.jl");
