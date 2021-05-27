@@ -25,7 +25,12 @@ function refresh!(TEX0::Tex)
 end
 
 """
-Push the contents of `tex1` back into the original `tex0`, replacing the original contents. 
+```
+texpath1 = joinpath(pwd(),"main1.tex")
+texpath0 = joinpath(pwd(),"main0.tex")
+pushback(texpath0, texpath1);
+```
+Push the contents of `tex1` back into the original `tex0`, replacing the original contents while preserving comments and begin-ends sections in `tex0`. 
 These contents are those not belong to
 - section (e.g. `\\section{}`, `\\figure{}`, etc.)
 - comments (e.g. `% hello I'm comment`)
@@ -48,7 +53,18 @@ function pushback(texpath0, texpath1)
 	# all lines begin with `\` despite `\cite`
 	
 	# Expression for the criteria that defines our target sentences.
-	expr1 = r"^([A-Za-z\[\]\(\)]|[1-9]|,|;|\\cite|\s+\w)[^%]*(?=%?)"; 
+	expr1 = r"^([A-Za-z\[\]\(\)\$\"`]|[1-9]|,|;|\\cite|\s+\w)[^%]*(?=%?)"; 
+	# We target lines who start with:
+	# 	[A-Za-z\[\]\(\)\$] denotes
+	# 		- normal characters (A-Z and a-z)
+	# 		- parenthesis "(", ")", "[", "]"
+	# 		- variable or inline equation, e.g. "$F = ma$ the Newton's 2nd law blablabla"
+	# and
+	# 		- inline citation may be just at the first of a line ("\cite{blablabla2021}")
+	# 		- anything starts with one or more white space and words (\s+\w)
+	# and anything that is not a comment "[^%]*"
+	# that may ended with one or no comment "(?=%?)".
+	
 	# https://regex101.com/r/x0HEer/1
 	pushback_rm!(expr1, TEX0);
 	pushback_rm!(expr1, TEX1);
@@ -79,8 +95,8 @@ function pushback(texpath0, texpath1)
 	fnm0 = basename(texpath0);
 	fnm1 = basename(texpath1);
 	fnm2 = basename(outputpath0_b);
-	println("Content successfully combined. Check the results by: ");
-	println("1. Comaring $fnm2 with $fnm1 to check if contents were correctly inserted.")
+	println("Content successfully combined. Since a few specific types of contents won't be successfully pushed back (e.g. changes in title and subtitle), please check the results by: ");
+	println("1. Comaring $fnm2 with $fnm1 (old) to check if contents were correctly inserted. (There shouldn't be any differences except comments and begin-end sections)")
 	println("2. Comparing $fnm2 with $fnm0 for english editing viewing.");
 	openit(dirname(outputpath0_b));
 end	
