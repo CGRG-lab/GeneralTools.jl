@@ -38,4 +38,5 @@ module GeneralTools
 	export getext
 	export removesection!
 	export removecomment!
+	export pushback
 end

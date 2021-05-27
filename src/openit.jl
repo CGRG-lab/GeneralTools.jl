@@ -1,4 +1,8 @@
 function openit(path::AbstractString)
+    if isempty(path)
+        path = pwd();
+    end
+
     if !ispath(path)
         @warn("You have entered an invalid file system entity.");
         return nothing
