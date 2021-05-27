@@ -74,9 +74,11 @@ function pushback(texpath0, texpath1)
 		outputpath0_b = pushback_genfile1(texpath1, TEX1);
 		openit(dirname(outputpath0_b));
 		fname1_b = basename(outputpath0_b);
+		fname1_a = basename(outputpath0_a);
 		fname0_a = basename(texpath0);
+		fname0_b = basename(texpath1);
 		
-		error("""Inconsistent in the number of lines. Please edit on `$fname1_b` to make the lines consistent with `$(basename(outputpath0_a))` (e.g. use vscode compare), and run the same function but with modified later file (e.g. `pushback("$(fname0_a)","$(fname1_b)"))`""");
+		error("""Inconsistent in the number of lines. Please edit on `$fname1_b` to make the lines consistent with `$fname1_a` (e.g. use vscode compare), where adding dummy new lines might be necessary (e.g. valid: "(CHECKPOINT: nothing here)"; invalid: "\\n"). Then, run the same function but with modified later file (e.g. `pushback("$(fname0_a)","$(fname1_b)")`). After that, it is suggested to compare $fname1_b with the original $fname0_b""");
 	end
 	
 	newstr = TEX1.eachline[TEX1.istarget];
