@@ -26,6 +26,7 @@ module GeneralTools
 	include("figureplot/supertitle.jl");
 	include("figureplot/superlegend.jl");
 	include("textprocessing/tex.jl");
+	using Markdown
 	include("textprocessing/getdoc.jl");
 	include("defolder.jl");
 
