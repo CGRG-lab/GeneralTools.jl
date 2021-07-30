@@ -66,8 +66,8 @@ function pushback(texpath0, texpath1)
 	# that may ended with one or no comment "(?=%?)".
 	
 	# https://regex101.com/r/x0HEer/1
-	pushback_rm!(expr1, TEX0);
-	pushback_rm!(expr1, TEX1);
+	pushback_rm!(TEX0, expr1);
+	pushback_rm!(TEX1, expr1);
 	
 	if sum(TEX0.istarget) != sum(TEX1.istarget)
 		outputpath0_a = pushback_genfile1(texpath0, TEX0);
@@ -136,7 +136,7 @@ function pushback_genfile2(texpath0,TEX0::Tex)
 		return outputpath0_b
 end
 
-function pushback_rm!(expr1::Regex, TEX0::Tex)
+function pushback_rm!(TEX0::Tex,expr1::Regex)
 	for (i,mt) in enumerate(match.(expr1, TEX0.eachline))
 		if !isnothing(mt)
 			TEX0.targetrange[i] = mt.offset:length(mt.match);

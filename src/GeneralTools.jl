@@ -26,7 +26,8 @@ module GeneralTools
 	include("figureplot/supertitle.jl");
 	include("figureplot/superlegend.jl");
 	include("textprocessing/tex.jl");
-
+	include("textprocessing/getdoc.jl");
+	include("defolder.jl");
 
 	export datalist
 	export back2
@@ -39,4 +40,6 @@ module GeneralTools
 	export removesection!
 	export removecomment!
 	export pushback
+	export getdoc
+	export defolder
 end
