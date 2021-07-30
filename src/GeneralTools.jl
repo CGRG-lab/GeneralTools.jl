@@ -1,6 +1,8 @@
- # usually git ignore manifest if this is a package for using, 
- # because usually dependencies on a specific version of other package (e.g. Plots) is not necessary, 
- # and if Manifest.toml is uploaded to github, people may have to install two different versions of Plots, resulting in confliction.
+# usually git ignore manifest if this is a package for using, 
+# because usually dependencies on a specific version of other package (e.g. Plots) is not necessary, 
+# and if Manifest.toml is uploaded to github, people may have to install two different versions of Plots, resulting in confliction.
+#
+#
  
 #  """
 #  You can add GeneralTools at https://github.com/CGRG-lab/GeneralTools.jl.git
@@ -9,7 +11,9 @@ module GeneralTools
     filesep = Base.Filesystem.path_separator;
     export filesep
 # using
-	# using Plots
+	# Whenever you apply `using ACertainPackage` here, make sure that package is added to Project.toml. 
+	# That is, `(GeneralTools) pkg> add ACertainPackage`
+	# Otherwise, it will fail when you use GeneralTools.jl in other place. 
 	
 # include
 	include("datalist.jl");
