@@ -3,10 +3,9 @@
 # and if Manifest.toml is uploaded to github, people may have to install two different versions of Plots, resulting in confliction.
 #
 #
- 
-#  """
-#  You can add GeneralTools at https://github.com/CGRG-lab/GeneralTools.jl.git
-#  """
+"""
+Add/update GeneralTools at https://github.com/CGRG-lab/GeneralTools.jl.git
+"""
 module GeneralTools 
     filesep = Base.Filesystem.path_separator;
     export filesep
