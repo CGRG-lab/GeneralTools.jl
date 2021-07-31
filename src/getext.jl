@@ -1,9 +1,11 @@
 """
-split the input name into the [name,".",extension] array.
-For example:
+`getext(pathname)` split the input name into the [name,".",extension] array.
+# Example:
+```
 	pathsplit = getext("inputfpath\\file.ext")
     pathsplit[1] = pathsplit[1]*"_copy";
 	outputpath = join(pathsplit); # which returns "inputfpath\\file_copy.ext"
+```
 """
 function getext(pathname)
 	dotpos = findall(isequal('.'),pathname);

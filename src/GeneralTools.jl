@@ -31,8 +31,7 @@ module GeneralTools
 	include("figureplot/superlegend.jl");
 	include("textprocessing/tex.jl");
 	using Markdown
-	include("textprocessing/getdoc.jl");
-	include("defolder.jl");
+	include("textprocessing/weavehugo.jl");
 
 	export datalist
 	export back2
@@ -45,6 +44,11 @@ module GeneralTools
 	export removesection!
 	export removecomment!
 	export pushback
+
+	# in weavehugo.jl
+	using Weave
+	export lazyhugo
+	export cp2content
 	export getdoc
 	export defolder
 end
