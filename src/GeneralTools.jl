@@ -1,12 +1,10 @@
-# usually git ignore manifest if this is a package for using, 
-# because usually dependencies on a specific version of other package (e.g. Plots) is not necessary, 
-# and if Manifest.toml is uploaded to github, people may have to install two different versions of Plots, resulting in confliction.
-#
-#
 """
 Add/update GeneralTools at https://github.com/CGRG-lab/GeneralTools.jl.git
 """
 module GeneralTools 
+# usually git ignore manifest if this is a package for using, 
+# because usually dependencies on a specific version of other package (e.g. Plots) is not necessary, 
+# and if Manifest.toml is uploaded to github, people may have to install two different versions of Plots, resulting in confliction.
     filesep = Base.Filesystem.path_separator;
     export filesep
 # using
@@ -31,6 +29,7 @@ module GeneralTools
 	include("textprocessing/tex.jl");
 	using Markdown
 	include("textprocessing/weavehugo.jl");
+	
 
 	export datalist
 	export back2
@@ -50,4 +49,5 @@ module GeneralTools
 	export cp2content
 	export getdoc
 	export defolder
+
 end

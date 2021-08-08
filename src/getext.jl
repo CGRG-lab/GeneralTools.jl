@@ -9,7 +9,13 @@
 """
 function getext(pathname)
 	dotpos = findall(isequal('.'),pathname);
-	str_ext = pathname[(dotpos[end]+1):length(pathname)];
-	str_beforedot = pathname[1:(dotpos[end]-1)];
+	if isempty(dotpos)
+		str_ext = "";
+		str_beforedot = pathname;
+	else
+		str_ext = pathname[(dotpos[end]+1):length(pathname)];
+		str_beforedot = pathname[1:(dotpos[end]-1)];
+	end
+	
 	return [str_beforedot,".",str_ext]
 end
