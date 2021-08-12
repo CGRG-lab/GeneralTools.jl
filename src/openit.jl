@@ -1,3 +1,7 @@
+"""
+`openit(path::AbstractString)`
+open the path of the file/folder.
+"""
 function openit(path::AbstractString)
     if isempty(path)
         path = pwd();
@@ -7,6 +11,8 @@ function openit(path::AbstractString)
         @warn("You have entered an invalid file system entity.");
         return nothing
     end
+    
+    path = abspath(path); # this is required otherwise in windows the cmd command to run won't work properly.
 
     if Sys.iswindows()
         # if isfile(path)

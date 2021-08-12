@@ -23,7 +23,7 @@ Notice that in this way the path is relative to the path of julia markdown, not 
 
 
 """
-`cp2content` copy the generated hugo markdown file to your site's `content`.
+`cp2content(dst::AbstractString)` copy the generated hugo markdown file to your site's `content`.
 # Example 
 ```
 lazyhugo();
@@ -35,7 +35,7 @@ cp2content("D:/GoogleDrive/Sites/learning-notes/content/en/my-project/MagTIP");
 $notice
 
 """
-function cp2content(dst; force=true, copy_from=copy_from)
+function cp2content(dst::AbstractString; force=true, copy_from=copy_from)
 
     allfiles = readdir(copy_from, join=true);
     bnames = getext.(allfiles); # base names
@@ -91,7 +91,7 @@ function lazyhugo(c...; out_path="_index.md")
         # if length(c) > 1
         #     opt = [opt..., c[2:end]...]
         # end
-        if !isfile(filename)
+        if !isfile(filename) # which means the first arg is expected to be a folder containing `.jmd` or `_index.md`
             currentdir = pwd();
             cd(filename);
             try
@@ -195,12 +195,44 @@ end
 
 
 """
-`defolder(dir)`
-Delete all empty folders left everytime we use the `weave(...)`.
+`defolder(dir::AbstractString)`
+Delete all folders left everytime we use the `weave(...;out_path=dir)`. The target folders are captured with regular expression pattern `r"jl_[A-Za-z0-9]{6}"`.
+
+`defolder()` search targets at current directory.
+
 """
-function defolder(dir::AbstractString="output")
-  flist = readdir(joinpath(pwd(),dir), join=true);
+function defolder(dir::AbstractString;force=false)
+  _defolder(dir, force);
+end
+
+function defolder(;force=false)
+  dir = pwd();
+  _defolder(dir, force);
+end
+
+function _defolder(dir, force::Bool)
+  targetexpr = Regex("jl_[A-Za-z0-9]{6}");
+  dir = abspath(dir); # reformat the path to prevent something like "dir/to/target\\jl_x3as5e"
+  flist = readdir(dir, join=true);
   dirtrue = isdir.(flist);
-  fmtmatched = .!isnothing.(match.(r"jl_[A-Za-z0-9]{6}",flist));
-  rm.(flist[dirtrue .& fmtmatched]);
+  fmtmatched = .!isnothing.(match.(targetexpr,flist));
+  targets = flist[dirtrue .& fmtmatched];
+  if isempty(targets)
+      println("No target folder found. Do nothing.");
+      return nothing
+  end  
+    
+  try
+    rm.(targets; recursive=force);
+  catch e
+    str = sprint(showerror, e);
+    openit(dir);
+    @warn ("Some of the target folders are not empty [$str]. Set `force=true` to delete all of them without prompt.");
+    println("Delete them anyway? (y/n)");
+    if readline(stdin) == "y"
+      _defolder(dir, true);
+    end
+  end
+   
+
 end
