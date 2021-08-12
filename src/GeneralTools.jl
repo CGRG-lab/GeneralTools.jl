@@ -29,7 +29,9 @@ module GeneralTools
 	include("textprocessing/tex.jl");
 	using Markdown
 	include("textprocessing/weavehugo.jl");
-	
+	using DataFrames
+	include("preview.jl");
+	include("textprocessing/df2latex.jl");
 
 	export datalist
 	export back2
@@ -42,6 +44,8 @@ module GeneralTools
 	export removesection!
 	export removecomment!
 	export pushback
+	export preview, middle
+	export df2latex
 
 	# in weavehugo.jl
 	using Weave
