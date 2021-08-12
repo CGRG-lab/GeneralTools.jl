@@ -31,6 +31,7 @@ module GeneralTools
 	include("textprocessing/weavehugo.jl");
 	using DataFrames
 	include("preview.jl");
+	using InteractiveUtils: clipboard # this is required for df2latex.jl
 	include("textprocessing/df2latex.jl");
 
 	export datalist

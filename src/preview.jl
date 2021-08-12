@@ -26,7 +26,7 @@ end
 
 """
 `middle(df::DataFrame, n::Integer)`
-get the dataframe of middle n rows.
+Similar to `first(df, n)` or `last(df, n)`, but get the dataframe of middle n rows.
 """
 function middle(df::DataFrame, n::Integer)
 	height = size(df)[1];
