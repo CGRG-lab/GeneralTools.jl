@@ -1,4 +1,6 @@
 copy_from=".";
+expr_target = r"jl_[A-Za-z0-9]{6}";
+expr_removebackslash = r"^(\\|/){1,2}";
 
 notice = Markdown.parse("""
 1. Please apply the following first:
@@ -58,63 +60,88 @@ function cp2content(dst::AbstractString; force=true, copy_from=copy_from)
     println.(allfiles[.!(isfig .| isindex)]);
 end
 
+
+default_outpath = "_index.md";
+default_figpath = "";
 """
-`lazyhugo([filename]; out_path="_index.md")` is equivalent to `weave("\$filename"; doctype="hugo", out_path="_index.md", fig_path="./")`. 
+`lazyhugo([filename]; out_path="$default_outpath")` is equivalent to `weave("\$filename"; doctype="hugo", out_path="$default_outpath", fig_path="$default_figpath")`. 
 
 Simply `lazyhugo()` automatically search for a julia markdown file (`.jmd`) of any name first, then the markdown file not named as "_index.md" or "index.md".
 Once a unique juliamarkdown file is found, it quit searching immediately; but if multiple or no (julia) markdown files were found, an error will be raised. 
     
-If \$filename is suffixed with `.md` (a markdown file instead of julia markdown), then weave option `informat="markdown"` will be added. If the first argument is a folder name, then `lazyhugo` search julia markdown then markdown files inside the folder.
+If `filename` is suffixed with `.md` (a markdown file instead of julia markdown), then weave option `informat="markdown"` will be added. If the first argument is a folder name, then `lazyhugo` search julia markdown then markdown files inside the folder.
+
+`lazyhugo` also reformat `{{< figure src="/using_gadfly_14_1.png"  >}}`. The `/using_gadfly_14_1.png` is captured with the first slash being deleted, leading to `![](using_gadfly_14_1.png)`
 
 # Notice
 $notice
 
 """
-function lazyhugo(c...; out_path="_index.md")
-    opt = [];
-    if isempty(c)
-        allfiles = readdir();
-        id = occursin.(r"\.jmd",allfiles); # check if there is .jmd file
-        if all(.!id) # if there is not any .jmd exist, then find something with extension .md.
-            id = occursin.(r"(?<!index)\.md",allfiles);
-        end
-        
-        filenames = allfiles[id];
-        if length(filenames) != 1
-            error("No or multiple markdown files exists. Please explicitily specify the target file you want to weave. For example, `lazyhugo(Doc.md)` or `lazyhugo(Doc.jmd)`. Noted that your markdown file to be converted cannot be named as `index.md`.");
-        end
-        
-        filename = filenames[1];
-        println("`$filename` is going to be weaved:");
-    else
-        filename = c[1];
-        # if length(c) > 1
-        #     opt = [opt..., c[2:end]...]
-        # end
-        if !isfile(filename) # which means the first arg is expected to be a folder containing `.jmd` or `_index.md`
-            currentdir = pwd();
-            cd(filename);
-            try
-                lazyhugo(; out_path=out_path);
-            catch e
-                cd(currentdir);
-                throw(e);
-            end
-            cd(currentdir);
-            return
-        end
-    end
-    if getext(filename)[end] == "md"
-        opt = [opt..., :informat => "markdown"]; 
-    end
-    
-    weave("$filename"; doctype="hugo", out_path=out_path, fig_path="./", opt...);
+function lazyhugo(; out_path=default_outpath)
+  opt = [];
+  allfiles = readdir();
+  id = occursin.(r"\.jmd",allfiles); # check if there is .jmd file
+  if all(.!id) # if there is not any .jmd exist, then find something with extension .md.
+      id = occursin.(r"(?<!index)\.md",allfiles);
+  end
+  
+  filenames = allfiles[id];
+  if length(filenames) != 1
+      error("No or multiple markdown files exists. Please explicitily specify the target file you want to weave. For example, `lazyhugo(Doc.md)` or `lazyhugo(Doc.jmd)`. Noted that your markdown file to be converted cannot be named as `index.md`.");
+  end
+  
+  filename = filenames[1];
+  println("`$filename` is going to be weaved:");
+  _lazyhugo(filename, out_path, opt);
 end
 
+function lazyhugo(filename::AbstractString; out_path=default_outpath)
+  opt = [];
+  if !isfile(filename) # which means the first arg is expected to be a folder containing `.jmd` or `_index.md`
+      currentdir = pwd();
+      cd(filename);
 
+      try
+          lazyhugo(; out_path=out_path);
+      catch e
+          cd(currentdir);
+          throw(e);
+      end
+      cd(currentdir);
+      return
+  end
 
+  if getext(filename)[end] == "md"
+      opt = [:informat => "markdown"]; 
+  end
+  _lazyhugo(filename, out_path, opt);
+end
 
+function _lazyhugo(filename::AbstractString, out_path, opt)
+  weave("$filename"; doctype="hugo", out_path=out_path, fig_path=default_figpath, opt...);
+  # Reformat figure referencing and remove extra first slash/backslash if there is any, because the slash/backslash makes referencing fail.
+  txt = readlines(out_path);
+  lines2replace = occursin.(r"(?<=figure src=)", txt);
+  matches = match.(r"(?<=\").*(?=\")",txt[lines2replace]);
+  newfigref = String[];
+  for mt in matches
+    str0 = mt.match;
+    str1 = replace(str0, expr_removebackslash => "");
+    newref = "![]($str1)"
+    push!(newfigref, newref);
+  end
 
+  if !all(lines2replace)
+    return
+  end
+  txt[lines2replace] .= newfigref;
+  
+  open(out_path, "w") do io
+    for line in txt
+      println(io, line);
+    end
+  end
+end
 
 
 """
@@ -211,11 +238,11 @@ function defolder(;force=false)
 end
 
 function _defolder(dir, force::Bool)
-  targetexpr = Regex("jl_[A-Za-z0-9]{6}");
+  
   dir = abspath(dir); # reformat the path to prevent something like "dir/to/target\\jl_x3as5e"
   flist = readdir(dir, join=true);
   dirtrue = isdir.(flist);
-  fmtmatched = .!isnothing.(match.(targetexpr,flist));
+  fmtmatched = .!isnothing.(match.(expr_target,flist));
   targets = flist[dirtrue .& fmtmatched];
   if isempty(targets)
       println("No target folder found. Do nothing.");
