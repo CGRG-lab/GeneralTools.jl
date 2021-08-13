@@ -33,6 +33,7 @@ module GeneralTools
 	include("preview.jl");
 	using InteractiveUtils: clipboard # this is required for df2latex.jl
 	include("textprocessing/df2latex.jl");
+	include("targetlist.jl");
 
 	export datalist
 	export back2
@@ -47,6 +48,7 @@ module GeneralTools
 	export pushback
 	export preview, middle
 	export df2latex
+	export targetlist
 
 	# in weavehugo.jl
 	using Weave
