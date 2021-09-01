@@ -4,6 +4,7 @@ authors = ["okatsn <49422823+okatsn@users.noreply.github.com>"]
 version = "0.1.0"
 
 [deps]
+Compose = "a81c6b42-2e10-5240-aca2-a61377ecd94b"
 DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
 InteractiveUtils = "b77e0a4c-d291-57a0-90e8-8db25a27a240"
 LaTeXStrings = "b964fa9f-0449-5b57-a5c2-d3ea65f4040f"

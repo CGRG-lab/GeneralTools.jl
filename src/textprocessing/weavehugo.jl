@@ -122,6 +122,9 @@ function _lazyhugo(filename::AbstractString, out_path, opt)
   # Reformat figure referencing and remove extra first slash/backslash if there is any, because the slash/backslash makes referencing fail.
   txt = readlines(out_path);
   lines2replace = occursin.(r"(?<=figure src=)", txt);
+  if !any(lines2replace)
+    return
+  end
   matches = match.(r"(?<=\").*(?=\")",txt[lines2replace]);
   newfigref = String[];
   for mt in matches
@@ -131,9 +134,7 @@ function _lazyhugo(filename::AbstractString, out_path, opt)
     push!(newfigref, newref);
   end
 
-  if !all(lines2replace)
-    return
-  end
+
   txt[lines2replace] .= newfigref;
   
   open(out_path, "w") do io

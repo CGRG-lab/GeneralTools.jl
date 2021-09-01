@@ -34,7 +34,9 @@ module GeneralTools
 	using InteractiveUtils: clipboard # this is required for df2latex.jl
 	include("textprocessing/df2latex.jl");
 	include("targetlist.jl");
-
+	include("nearestbelow.jl");
+	using Compose
+	include("figureplot/composetools.jl")
 	export datalist
 	export back2
 	export supertitle
@@ -49,12 +51,22 @@ module GeneralTools
 	export preview, middle
 	export df2latex
 	export targetlist
-
+	export nearestbelow
+	
 	# in weavehugo.jl
 	using Weave
 	export lazyhugo
 	export cp2content
 	export getdoc
 	export defolder
+	
+	# in composetools.jl
+	export myarrow
+	export pos2points
+	export pointshift
+	export composelabels
+	export ctparent
+	export ctchildheight
+	export ctchildwidth
 
 end
