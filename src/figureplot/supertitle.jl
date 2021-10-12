@@ -36,6 +36,6 @@ function supertitle(titletext;size=(200,100),height=0.1, ylim=[0,0])
 	title = Plots.scatter(y, marker=0,markeralpha=0, 
 		ylim = ylim,
 		axis=false, leg=false,grid = false,ticks = nothing,size=size); # annotations=(2, y[2], Plots.text(titletext)),
-	annotate!(title, [(2.0, y[2], text(titletext...))])
+	annotate!(title, [(2.0, y[2], Plots.text(titletext...))])
 	return title, Plots.grid(2,1,heights = [height,1-height])
 end

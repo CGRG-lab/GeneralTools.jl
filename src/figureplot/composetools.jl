@@ -187,10 +187,6 @@ function composelabels(labels::Vector{<:AbstractString}, contextdim::NTuple{4,<:
         
     end
     return contexts
-    #  compose(context(),
-    #  (context(0.0,pad1y+0.5height1,pad1x,labelheight), Compose.text(textpos..., xstr, hcenter, vcenter)),
-    #  (context(pad1x, pad1y+height1, width1, labelheight), Compose.text(textpos..., ystr, hcenter, vcenter))
-    #  )
 end
 
 
