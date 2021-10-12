@@ -59,7 +59,7 @@ function superlegend(strings;plotopts=0,size=(180,21), ylim=[-1,1], fontsize = 1
     annotations = []
     for i = 1:lenstr
         push!(annotations, "");
-        push!(annotations, text(strings[i], texthalign, fontsize));
+        push!(annotations, Plots.text(strings[i], texthalign, fontsize));
     end
     push!(annotations, "");
     
