@@ -36,7 +36,7 @@ module GeneralTools
 	include("targetlist.jl");
 	include("nearestbelow.jl");
 	using Compose
-	include("figureplot/composetools.jl")
+	include("figureplot/composetools.jl");
 	export datalist
 	export back2
 	export supertitle
@@ -68,5 +68,8 @@ module GeneralTools
 	export ctparent
 	export ctchildheight
 	export ctchildwidth
+	
+	include("dfprocessing.jl"); 
+	export filtern!
 
 end
