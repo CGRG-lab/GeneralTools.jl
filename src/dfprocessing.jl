@@ -18,3 +18,42 @@ end
 function filtern!(col1, col2, df; chkfun=defaultchkfn)
 	return filter!([col1, col2] => (c1, c2) -> !any(f -> f(c1) || f(c2), chkfun), df)
 end
+
+"""
+`forsegplot(df, [:col1, :col2])` returns `df_seg`, a copy of dataframe `df`, for further `Geom.segment` plot in Gadfly. Basically it simply returns
+```julia 
+x = df[:col1];
+y = df[:col2];
+df_seg = DataFrame(x0=x[1:end-1], x1=x[2:end], # segment's starts
+				   y0=y[1:end-1], y1=y[2:end], # segment's ends
+```
+that you can apply later:
+```julia
+Gadfly.plot(df_seg, x=:x0,y=:y0,xend=:x1, yend=:y1, Geom.segment)
+```
+"""
+function forsegplot(df::DataFrame, cols::Vector{<:Union{Symbol, String}}) # 
+	names0 = [:x0, :y0, :z0];
+	names1 = [:x1, :y1, :z1];
+	lenc = length(cols);
+	names0 = names0[1:lenc];
+	names1 = names1[1:lenc];
+	
+	values0 = [];
+	values1 = [];
+	for name in cols
+		xi = df[!,name];
+		push!(values0, xi[1:end-1]);
+		push!(values1, xi[2:end]);
+	end
+	
+	cb(v1, v2) = [permutedims(hcat(v1, v2))...]; # making a n by 2 matrix using v1 and v2, and transpose it and release every element that we can have something like :x0, :x1, :y0, :y1...
+	
+	allnames = (cb(names0, names1)...,); # must be a tuple for NamedTuple construction
+	allvalues = cb(values0, values1);
+	nt = NamedTuple{allnames}(allvalues);
+
+	df_seg = DataFrame(nt);
+	return df_seg
+
+end

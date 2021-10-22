@@ -69,7 +69,12 @@ module GeneralTools
 	export ctchildheight
 	export ctchildwidth
 	
+	using Gadfly
 	include("dfprocessing.jl"); 
 	export filtern!
+	export forsegplot
+	
+	include("rescale.jl")
+	export rescale
 
 end
