@@ -59,6 +59,8 @@ module GeneralTools
 	export cp2content
 	export getdoc
 	export defolder
+	include("textprocessing/renamefile.jl");
+	export renamefile
 	
 	# in composetools.jl
 	export myarrow

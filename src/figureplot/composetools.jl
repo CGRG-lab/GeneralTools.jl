@@ -28,7 +28,7 @@ end
 
 
 """
-`ctchildwidth(width0::Float64, contextdim::NTuple{4,<:Real};UnitBox::NTuple{4,<:Real}=(0,0,1,1))` convert the width in `c0` to the length it should be in `c1` that the line: 
+`ctchildwidth(width0, contextdim::NTuple{4,<:Real};UnitBox::NTuple{4,<:Real}=(0,0,1,1))` convert the width in `c0` to the length it should be in `c1` that the line: 
 ```
 c0 = context();
 c1 = context(contextdim...;units=UnitBox(0,0,2,2));
@@ -40,15 +40,15 @@ has the length looks visually the same as:
 compose(c0, line([(0,0),(width0,0)]) )
 ```
 """
-function ctchildwidth(width0::Float64, contextdim::NTuple{4,<:Real};UnitBox::NTuple{4,<:Real}=(0,0,1,1))
+function ctchildwidth(width0, contextdim::NTuple{4,<:Real};UnitBox::NTuple{4,<:Real}=(0,0,1,1))
 	# width0/contextdim[3] = width1/UnitBox[3]
 	return width0*UnitBox[3]/contextdim[3] # width1
 end
 
 """
-`height1 = ctchildheight(height0::Float64, contextdim::NTuple{4,<:Real};UnitBox::NTuple{4,<:Real}=(0,0,1,1))` works the same as `ctchildwidth()` but rescale in y direction. See `ctchildwidth`'s documentation.
+`height1 = ctchildheight(height0, contextdim::NTuple{4,<:Real};UnitBox::NTuple{4,<:Real}=(0,0,1,1))` works the same as `ctchildwidth()` but rescale in y direction. See `ctchildwidth`'s documentation.
 """
-function ctchildheight(height0::Float64, contextdim::NTuple{4,<:Real};UnitBox::NTuple{4,<:Real}=(0,0,1,1))
+function ctchildheight(height0, contextdim::NTuple{4,<:Real};UnitBox::NTuple{4,<:Real}=(0,0,1,1))
 	# height0/contextdim[4] = height1/UnitBox[4]
 	return height0*UnitBox[4]/contextdim[4] # height1
 end
