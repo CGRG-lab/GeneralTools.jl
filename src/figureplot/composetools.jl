@@ -10,6 +10,11 @@ circle1 = circle(x1,y1,0.1);
 compose(c0, (c1, circle1));
 ```
 Using the transformed coordinates `(x0,y0)=ctparent((x1,y1),contextdim;UnitBox=(0,0,2,2))` we can draw the same circle as `circle1` by `compose(c0, circle(x0,y0,0.1))`.
+
+Broadcasting example:
+```julia
+ctparent.([(x1,y1), (x2,y2)], [contextdim]; UnitBox=(0,0,2,2))
+```
 """
 function ctparent(point::NTuple{2,<:Real},contextdim::NTuple{4,<:Real};UnitBox::NTuple{4,<:Real}=(0,0,1,1))
     x1, y1 = point;
