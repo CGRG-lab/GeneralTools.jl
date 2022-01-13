@@ -8,3 +8,23 @@ expr_removebackslash = GeneralTools.expr_removebackslash;
 	@test replace("using_gadfly/asdf_fd/_10_1.png", expr_removebackslash => "") == "using_gadfly/asdf_fd/_10_1.png"
 	@test replace("using_gadfly_10_1.png", expr_removebackslash => "") == "using_gadfly_10_1.png"
 end
+
+@testset "Check getdoc:" begin
+	s = [
+	"% DOC BEGIN", 
+	"% first line", 
+	"% bla haha", 
+	"% foobar is good", 
+	"% DOC END", 
+	"function blablabla(hello, world)", 
+	"x = 1; ", 
+	"y = 1; % with comment. ", 
+	"% y = 1;",
+	"%% only comment"
+	];
+	doc = GeneralTools._getrawcomment(s);
+	
+	@test doc[1] == "% DOC BEGIN"
+	@test doc[end] == "% DOC END"
+
+end

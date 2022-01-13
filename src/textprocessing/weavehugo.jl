@@ -174,13 +174,7 @@ function getdoc(filepath::String; first_head=0)
     readlines(file);
     end
   if getext(filepath)[end] == "m" # if it is the matlab file
-    funbegin = findfirst(occursin.(r"^function\s",s));
-    # find the line where function begin
-    if funbegin == 1
-      return "No documentation for $filepath"
-    end
-    
-    doc = s[1:funbegin-1];
+    doc = _getrawcomment(s);
     x = join(lang_matlab(doc,first_head = first_head));
     y = Markdown.parse(x); # or @eval @md_str $x is the same.
   else
@@ -188,6 +182,22 @@ function getdoc(filepath::String; first_head=0)
   end
   
   return y
+end
+
+function _getrawcomment(s)
+  funbegin = findfirst(occursin.(r"^function\s",s));
+  # find the line where function begin
+  if funbegin == 1
+    return "No documentation for $filepath"
+  end
+  
+  if isnothing(funbegin)
+    docend = length(s);
+  else
+    docend = funbegin - 1;
+  end
+  
+  doc = s[1:docend];   
 end
 
 function lang_matlab(doc; first_head=0)
