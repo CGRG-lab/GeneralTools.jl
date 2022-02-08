@@ -78,5 +78,9 @@ module GeneralTools
 	
 	include("rescale.jl")
 	export rescale
+	
+	# in filelist.jl
+	include("filelist.jl")
+	export filelist
 
 end
