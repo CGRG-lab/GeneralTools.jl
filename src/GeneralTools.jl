@@ -83,4 +83,11 @@ module GeneralTools
 	include("filelist.jl")
 	export filelist
 
+	using DataFrames
+	include("dfvstack.jl")
+	export dfvstack
+
+	using CSV
+	include("skipwrite.jl")
+	export skipwrite
 end
