@@ -90,4 +90,8 @@ module GeneralTools
 	using CSV
 	include("skipwrite.jl")
 	export skipwrite
+
+	using DataFrames, MAT, CSV
+	include("readtable.jl")
+	export readtable
 end
