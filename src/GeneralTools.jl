@@ -1,5 +1,7 @@
 """
 Add/update GeneralTools at https://github.com/CGRG-lab/GeneralTools.jl.git
+
+TODO: Split `GeneralTools` to, for example, `DataFrameAssistant`, `DocumentationAssistant`, `OSIOAssitant`, `MathAssistant`...
 """
 module GeneralTools 
 # usually git ignore manifest if this is a package for using, 
