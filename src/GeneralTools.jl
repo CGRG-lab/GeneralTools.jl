@@ -68,9 +68,6 @@ module GeneralTools
 	# in filelist.jl
 
 
-	using CSV
-	include("skipwrite.jl")
-	export skipwrite
 
 
 end
